@@ -1,0 +1,27 @@
+{
+  "name": "client-tricks-and-tips",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edumoreira1506/client-tricks-and-tips.git"
+  },
+  "author": "Eduardo Moreira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edumoreira1506/client-tricks-and-tips/issues"
+  },
+  "homepage": "https://github.com/edumoreira1506/client-tricks-and-tips#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "nodemon": "^1.19.1"
+  }
+}
