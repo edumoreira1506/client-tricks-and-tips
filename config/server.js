@@ -6,9 +6,9 @@ const expressSession = require('express-session');
 const app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', './app/views');
+app.set('views', './application/views');
 
-app.use(express.static('./app/public'));
+app.use(express.static('./application/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(expressSession({
@@ -19,7 +19,6 @@ app.use(expressSession({
 
 consign()
 	.include('application/controllers')
-	.then('application/views')
 	.then('config/routes.js')
 	.into(app);
 
