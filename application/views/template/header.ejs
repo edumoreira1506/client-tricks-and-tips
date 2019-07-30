@@ -59,6 +59,9 @@
                     <div class="user-panel">
                         <% if(logged){ %>
                             Olá, <%= username %> / <a href="/exit">Sair</a>
+                            <% if(admin){ %>
+                                / <a href="/panel">Painel</a>
+                            <% } %>
                         <% }else{ %>
                             <a href="/login">Login</a> / <a href="/register">Registrar</a>
                         <% } %>

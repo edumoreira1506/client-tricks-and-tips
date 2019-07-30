@@ -7,7 +7,8 @@ module.exports = app => {
             scripts: [],
             title: 'Home',
             logged: req.session.logged,
-            username: req.session.username
+            username: req.session.username,
+            admin: req.session.admin
         }
 
         res.render('blog/index', data)
@@ -21,7 +22,8 @@ module.exports = app => {
                 scripts: ['login'],
                 title: 'Login',
                 logged: req.session.logged,
-                username: req.session.username
+                username: req.session.username,
+                admin: req.session.admin
             }
 
             res.render('login/index', data)
@@ -36,7 +38,8 @@ module.exports = app => {
                 scripts: ['register'],
                 title: 'Registro',
                 logged: req.session.logged,
-                username: req.session.username
+                username: req.session.username,
+                admin: req.session.admin
             }
 
             res.render('register/index', data)
@@ -81,6 +84,7 @@ module.exports = app => {
                             req.session.logged = true;
                             req.session.token = serverResponse.data.token;
                             req.session.username = serverResponse.data.username;
+                            req.session.admin = serverResponse.data.admin;
                         }
 
                         res.send(serverResponse.data)
