@@ -1,4 +1,6 @@
 const axios = require('axios')
+const formidable = require('formidable')
+const FormData = require('form-data');
 
 module.exports = app => {
 
@@ -53,13 +55,38 @@ module.exports = app => {
                 message: 'Você já está logado'
             }
         } else {
-            axios.post(`http://localhost:3000/user`, req.body)
-                .then((serverResponse) => {
-                    res.send(serverResponse.data)
-                })
-                .catch((error) => {
-                    res.send(error)
-                })
+            let form = new formidable.IncomingForm();
+
+            form.parse(req);
+
+            form.parse(req, function(err, fields, files) {
+                let fd = new FormData();
+
+                fd.append('username', fields.username);
+                fd.append('password', fields.password);
+                fd.append('confirmPassword', fields.confirmPassword);
+                fd.append('email', fields.email);
+                fd.append('bornDate', fields.bornDate);
+                fd.append('description', fields.description);
+
+                const config = {
+                    headers: {
+                        'accept': 'application/json',
+                        'Accept-Language': 'en-US,en;q=0.8',
+                        'Content-Type': `multipart/form-data; boundary=${fd._boundary}`,
+                    }
+                }
+
+                axios.post(`http://localhost:3000/user`, fd, config)
+                    .then((serverResponse) => {
+                        res.send(serverResponse.data)
+                    })
+                    .catch((error) => {
+                        res.send(error)
+                    })
+                console.log(fields)
+                console.log(files)
+            });
         }
     }
 

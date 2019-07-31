@@ -4,12 +4,13 @@
         <div class="row">
             <div class="col-sm-12 order-2 order-lg-1">
                 <form class="contact-form" id="register-form">
-                    <input type="text" id="username" placeholder="Nome de usuário">
-                    <input type="email" id="email" placeholder="E-mail">
-                    <input type="password" id="password" placeholder="Senha">
-                    <input type="password" id="confirm-password" placeholder="Confirmação de senha">
-                    <input type="date" id="born-date">
-                    <textarea id="description" placeholder="Descrição (opcional)"></textarea>
+                    <input required name="username" type="text" id="username" placeholder="Nome de usuário">
+                    <input required name="email" type="email" id="email" placeholder="E-mail">
+                    <input required name="password" type="password" id="password" placeholder="Senha">
+                    <input required name="confirmPassword" type="password" id="confirm-password" placeholder="Confirmação de senha">
+                    <input required name="bornDate" type="date" id="born-date">
+                    <input type="file" name="image" id="image">
+                    <textarea name="description" id="description" placeholder="Descrição (opcional)"></textarea>
                     <button id="button-register" type="submit" class="site-btn">Registrar<img src="libraries/img/icons/double-arrow.png" alt="#" /></button>
                 </form>
             </div>

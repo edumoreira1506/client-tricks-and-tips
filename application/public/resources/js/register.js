@@ -4,19 +4,20 @@ $(document).ready(function(){
         e.preventDefault();
 
         startAnimateButton('#button-register')
+        
+        let form = document.getElementById('register-form')
+        let fd = new FormData(form);
 
-        let username = $('#username').val();
-        let email = $('#email').val();
-        let confirmPassword = $('#confirm-password').val();
-        let bornDate = $('#born-date').val();
-        let description = $('#description').val();
-        let password = $('#password').val();
+        fd.append('image', $('#image')[0].files[0])
 
         $.ajax({
             type:'POST',
-            url: 'register',
-            data: { username, email, confirmPassword, bornDate, description, password },
-			dataType: 'json',
+            url: '/register',
+            data: fd,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: 'POST',
             success: function(data){
                 if(data.status){
                     swal('Boa!','Registro efeutado com sucesso!','success').then(() => {
