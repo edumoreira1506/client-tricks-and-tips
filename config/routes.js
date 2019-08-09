@@ -9,5 +9,5 @@ module.exports = app => {
     app.get('/register', app.application.controllers.blog.register)
     app.post('/register', app.application.controllers.blog.registerApi)
 
-    app.get('/panel', app.application.controllers.admin.panel)
+    app.get('/admin', app.application.controllers.admin.panel)
 }

@@ -5,13 +5,10 @@ const FormData = require('form-data');
 module.exports = app => {
 
     const index = (req, res) => {
-        let data = {
-            scripts: [],
-            title: 'Home',
-            logged: req.session.logged,
-            username: req.session.username,
-            admin: req.session.admin
-        }
+        let data = app.application.controllers.session.getSession(req)
+
+        data.scripts = []
+        data.title = 'Home'
 
         res.render('blog/index', data)
     }
@@ -20,13 +17,10 @@ module.exports = app => {
         if (req.session.logged) {
             res.redirect('/')
         } else {
-            let data = {
-                scripts: ['login'],
-                title: 'Login',
-                logged: req.session.logged,
-                username: req.session.username,
-                admin: req.session.admin
-            }
+            let data = app.application.controllers.session.getSession(req)
+
+            data.scripts = ['login']
+            data.title = 'Login'
 
             res.render('login/index', data)
         }
@@ -36,13 +30,10 @@ module.exports = app => {
         if (req.session.logged) {
             res.redirect('/')
         } else {
-            let data = {
-                scripts: ['register'],
-                title: 'Registro',
-                logged: req.session.logged,
-                username: req.session.username,
-                admin: req.session.admin
-            }
+            let data = app.application.controllers.session.getSession(req)
+
+            data.scripts = ['register']
+            data.title = 'Registro'
 
             res.render('register/index', data)
         }
@@ -55,38 +46,35 @@ module.exports = app => {
                 message: 'Você já está logado'
             }
         } else {
-            let form = new formidable.IncomingForm();
-
-            form.parse(req);
+            let form = new formidable.IncomingForm(); 
+            let user = {}          
 
             form.parse(req, function(err, fields, files) {
-                let fd = new FormData();
-
-                fd.append('username', fields.username);
-                fd.append('password', fields.password);
-                fd.append('confirmPassword', fields.confirmPassword);
-                fd.append('email', fields.email);
-                fd.append('bornDate', fields.bornDate);
-                fd.append('description', fields.description);
-
-                const config = {
-                    headers: {
-                        'accept': 'application/json',
-                        'Accept-Language': 'en-US,en;q=0.8',
-                        'Content-Type': `multipart/form-data; boundary=${fd._boundary}`,
-                    }
-                }
-
-                axios.post(`http://localhost:3000/user`, fd, config)
-                    .then((serverResponse) => {
-                        res.send(serverResponse.data)
-                    })
-                    .catch((error) => {
-                        res.send(error)
-                    })
-                console.log(fields)
-                console.log(files)
+                user.username = fields.username
+                user.password = fields.password
+                user.confirmPassword = fields.confirmPassword
+                user.email = fields.email
+                user.bornDate = fields.bornDate
+                user.description = fields.description                    
             });
+
+            form.on('fileBegin', function (name, file){
+                if(file.name.endsWith('png') || file.name.endsWith('jpeg') || file.name.endsWith('jpg') || file.name.endsWith('gif')){
+                    let archiveName = Date.now() + file.name;
+                    file.path = `application/public/resources/images/users-perfil/${archiveName}`;
+                    user.imagePath = archiveName
+                }
+            });
+
+            setTimeout(function(){
+                axios.post(`http://localhost:3000/user`, user)
+                .then((serverResponse) => {
+                    res.send(serverResponse.data)
+                })
+                .catch((error) => {
+                    res.send(error)
+                })
+            }, 1000)
         }
     }
 
