@@ -1,5 +1,7 @@
 module.exports = app => {
     app.get('/', app.application.controllers.blog.index)
+    
+    app.get('/panel', app.application.controllers.panel.index)
 
     app.get('/login', app.application.controllers.blog.login)
     app.post('/login', app.application.controllers.blog.auth)
