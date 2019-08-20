@@ -100,6 +100,7 @@ module.exports = app => {
                             req.session.token = serverResponse.data.token;
                             req.session.username = serverResponse.data.username;
                             req.session.admin = serverResponse.data.admin;
+                            req.session.userImage = serverResponse.data.userImage;
                         }
 
                         res.send(serverResponse.data)

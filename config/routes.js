@@ -1,5 +1,7 @@
 module.exports = app => {
     app.get('/', app.application.controllers.blog.index)
+
+    app.get('/users', app.application.controllers.users.index)
     
     app.get('/panel', app.application.controllers.panel.index)
 
@@ -10,6 +12,4 @@ module.exports = app => {
 
     app.get('/register', app.application.controllers.blog.register)
     app.post('/register', app.application.controllers.blog.registerApi)
-
-    app.get('/admin', app.application.controllers.admin.panel)
 }
